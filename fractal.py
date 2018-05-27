@@ -55,6 +55,28 @@ def drawChuang(n):
     end = (450,450)
     drawChuangSingle(n,start,end)
 
+# select[2] 正方形
+def drawZhengSingle(n,start,end):
+    f = (end[0]-start[0],end[1]-start[1])
+    lrotate = (start[1]-end[1],end[0]-start[0])
+    f = lrotate
+    p1 = (start[0]+f[0],start[1]+f[1])
+    p2 = (end[0]+f[0],end[1]+f[1])
+    p3 = end
+    p4 = start
+    c.create_polygon(p1+p2+p3+p4,fill='blue')
+    if n==0:
+        return
+    m = (int((p1[0]+p2[0])/2),int((p1[1]+p2[1])/2))
+    f2 = (int(f[0]/2),int(f[1]/2))
+    p3 = (m[0]+f2[0],m[1]+f2[1])
+    drawZhengSingle(n-1,p1,p3)
+    drawZhengSingle(n-1,p3,p2)
+def drawZheng(n):
+    start = (290,400)
+    end = (210,400)
+    drawZhengSingle(n,start,end)
+
 def run():
     global c,n,selectvalue,func
     num = n.get()
@@ -69,8 +91,8 @@ def nextstep():
     n.set(n.get()+1)
     run()
 
-select = ['科赫雪花','圆形窗花']
-func = [drawKoch,drawChuang]
+select = ['科赫雪花','圆形窗花','自制-正方形']
+func = [drawKoch,drawChuang,drawZheng]
 
 root = Tk()
 root.title("Fractal")
